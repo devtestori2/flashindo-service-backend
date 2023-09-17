@@ -1,39 +1,84 @@
 const express = require("express");
 const {
-  getAllProducts,
-  createProduct,
-  getOneProduct,
-  updateProduct,
-  deleteProduct,
+  createOneTask,
+  getOneTask,
+  updateTask,
+  deleteTask,
+  getAllTasks,
+  getAllTasksByServicer,
+  getOneTaskByKodeTask,
+  giveCommentToTask,
+  givePriceOfTask,
+  takeTaskByServicer,
+  uploadImageTask,
 } = require("./controller");
 const router = express.Router();
 const uploadMiddleware = require("../../middleware/multer");
 const { authenticateUser, authorizeRoles } = require("../../middleware/auth");
 
-router.get("/", getAllProducts);
-router.get("/:id", getOneProduct);
-router.delete("/:id", authenticateUser, authorizeRoles("admin"), deleteProduct);
+router.get(
+  "/",
+  authenticateUser,
+  authorizeRoles("admin", "servicer"),
+  getAllTasks
+);
+router.get(
+  "/task-by-servicer",
+  authenticateUser,
+  authorizeRoles("admin", "servicer"),
+  getAllTasksByServicer
+);
+router.get(
+  "/:id",
+  authenticateUser,
+  authorizeRoles("admin", "servicer"),
+  getOneTask
+);
+router.get("/kode/:kode", getOneTaskByKodeTask);
+router.delete("/:id", authenticateUser, authorizeRoles("admin"), deleteTask);
 router.put(
   "/:id",
   uploadMiddleware.fields([
-    { name: "thumbnail", maxCount: 1 },
-    { name: "image1", maxCount: 1 },
-    { name: "image2", maxCount: 1 },
+    { name: "gambar_service", maxCount: 1 },
   ]),
   authenticateUser,
-  authorizeRoles("admin"),
-  updateProduct
+  authorizeRoles("admin", "servicer"),
+  updateTask
 );
-router.post(
-  "/",
+router.put(
+  "/comment-task/:id",
+  authenticateUser,
+  authorizeRoles("admin", "servicer"),
+  giveCommentToTask
+);
+router.put(
+  "/finish-task/:id",
+  authenticateUser,
+  authorizeRoles("admin"),
+  giveCommentToTask
+);
+router.put(
+  "/give-price-task/:id",
+  authenticateUser,
+  authorizeRoles("admin"),
+  givePriceOfTask
+);
+router.put(
+  "/take-task/:id",
+  authenticateUser,
+  authorizeRoles("admin", "servicer"),
+  takeTaskByServicer
+);
+router.put(
+  "/upload-task/:id",
   uploadMiddleware.fields([
-    { name: "thumbnail", maxCount: 1 },
-    { name: "image1", maxCount: 1 },
-    { name: "image2", maxCount: 1 },
+    { name: "gambar_service", maxCount: 1 },
   ]),
   authenticateUser,
-  authorizeRoles("admin"),
-  createProduct
+  authorizeRoles("admin", "servicer"),
+  uploadImageTask
 );
+
+router.post("/", authenticateUser, authorizeRoles("admin"), createOneTask);
 
 module.exports = router;

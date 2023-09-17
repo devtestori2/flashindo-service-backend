@@ -1,55 +1,65 @@
 const mongoose = require("mongoose");
+const User = require("../users/model")
 const TaskSchema = new mongoose.Schema(
   {
     title: {
       type: String,
-      required: [true, "Product Name must be Insert"],
+      required: [true, "Title must be Insert"],
     },
-    description: {
+    kode_task: {
       type: String,
-      default: "",
+      required: [true, "Kode Task must be Insert"],
     },
-    purchase_price: {
+    deskripsi: {
+      type: String,
+      required: [true, "Description must be Insert"],
+    },
+    status: {
+      type: String,
+      enum: ["pending", "onprogress", "finish"],
+      default: "pending",
+    },
+    komentar_service: {
+      type: String,
+      default:"",
+    },
+    gambar_service: {
+      type: String,
+      default:"",
+    },
+    gambar_service_URL: {
+      type: String,
+      default:"",
+    },
+    status_task: {
+      type: String,
+      enum: ["enable", "disable"],
+      default: "enable",
+    },
+    modal_service: {
       type: Number,
-      required: [true, "Product Purchase Price must be Insert"],
+      default:0
     },
-    sell_price: {
+    harga_service: {
       type: Number,
-      required: [true, "Product Sell Price must be Insert"],
+      default:0
     },
-    thumbnail: {
+    nama_consumen: {
       type: String,
-      required: [true, "Product must have thumbnail"],
+      required: [true, "Nama Consumen must be Insert"],
     },
-    thumbnailUrl: {
+    no_telp_consumen: {
       type: String,
-      default: "",
+      required: [true, "No Telp Consumen must be Insert"],
     },
-
-    image1: {
+    nama_barang: {
       type: String,
-      required: [true, "Product must have image1"],
+      required: [true, "Nama Barang must be Insert"],
     },
-    image1Url: {
-      type: String,
-      default: "",
-    },
-    image2: {
-      type: String,
-      required: [true, "Product must have image2"],
-    },
-    image2Url: {
-      type: String,
-      default: "",
-    },
-    stock: {
-      type: Number,
-      required: [true, "Product Stock must be Insert"],
-    },
-    category: {
+    id_servicer: {
       type: mongoose.Types.ObjectId,
-      ref: "Category",
-      required: [true, "Item must have the Category"],
+      ref: "User",
+      default: null,
     },
   },
   {

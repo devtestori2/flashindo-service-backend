@@ -17,8 +17,9 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
-    folder: "uploads", // Change this to your desired folder name in Cloudinary
+    folder: "tasks", // Change this to your desired folder name in Cloudinary
     allowedFormats: ["jpg", "jpeg", "png", "gif"], // Allowed file formats
+
   },
 });
 const fileSizeLimit = 10 * 1024 * 1024; // For example, 10 MB

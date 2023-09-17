@@ -51,4 +51,4 @@ UserSchema.pre("save", async function () {
     return isMatch;
   };
   
-  module.exports = mongoose.model("Users", UserSchema);
+  module.exports = mongoose.model("User", UserSchema);

@@ -5,7 +5,6 @@ const logger = require('morgan');
 const notFoundMiddleware = require("./app/middleware/not-found")
 const handleErrorMiddleware = require("./app/middleware/handler-error")
 const usersRouter = require("./app/api/users/router")
-const authRouter = require("./app/api/auth/router")
 const tasksRouter = require("./app/api/tasks/router")
 const cors = require("cors")
 
@@ -27,7 +26,6 @@ app.get("/", async (req,res,next) => {
 })
 
 app.use(`/users`,usersRouter)
-app.use(`/auth`, authRouter)
 app.use(`/tasks`, tasksRouter)
 // middlewares
 app.use(notFoundMiddleware);
