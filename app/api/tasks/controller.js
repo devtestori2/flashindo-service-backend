@@ -301,7 +301,7 @@ const takeTaskByServicer =async (req, res, next) => {
       throw new CustomAPI.NotFoundError("Not Found Task");
     }
 
-   
+    result.status="onprogress"
     result.id_servicer = userId;
   
     await result.save();
